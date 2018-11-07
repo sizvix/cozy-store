@@ -10,6 +10,7 @@ import Sections from './Sections'
 import AppsLoading from 'ducks/components/AppsLoading'
 
 import getFilteredAppsFromSearch from 'lib/getFilteredAppsFromSearch'
+import OneAppLoading from 'ducks/components/OneAppLoading'
 
 const { BarCenter } = cozy.bar
 
@@ -46,6 +47,8 @@ export class MyApplications extends Component {
     const title = <h2 className="sto-view-title">{t('myapps.title')}</h2>
     return (
       <Content className="sto-myapps">
+        {isFetching && !RegExp('(.)*/myapps/(.)+').test(window.location) && <AppsLoading />}
+
         <div className="sto-list-container">
           {isMobile && <BarCenter>{title}</BarCenter>}
           <div className="sto-myapps-sections">
@@ -71,8 +74,6 @@ export class MyApplications extends Component {
           fetchLatestApp={this.props.fetchLatestApp}
           parent="myapps"
         />
-
-        {isFetching && <AppsLoading />}
       </Content>
     )
   }
